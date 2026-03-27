@@ -7,6 +7,7 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+			"./1774622737640784070.html"
 	],
 	prefix: "",
 	theme: {
@@ -16,6 +17,10 @@ export default {
 			screens: {
 				'2xl': '1400px'
 			}
+		},
+		fontFamily: {
+			cormorant: ['Cormorant', 'Georgia', 'serif'],
+			ibm: ['IBM Plex Sans', 'sans-serif'],
 		},
 		extend: {
 			colors: {
@@ -88,7 +93,24 @@ export default {
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fadeIn 0.8s ease-out forwards',
+				'fade-up': 'fadeUp 0.8s ease-out forwards',
+				'slide-in': 'slideIn 0.6s ease-out forwards',
+			},
+			keyframes: {
+				fadeIn: {
+					from: { opacity: '0' },
+					to: { opacity: '1' },
+				},
+				fadeUp: {
+					from: { opacity: '0', transform: 'translateY(30px)' },
+					to: { opacity: '1', transform: 'translateY(0)' },
+				},
+				slideIn: {
+					from: { opacity: '0', transform: 'translateX(-20px)' },
+					to: { opacity: '1', transform: 'translateX(0)' },
+				},
 			}
 		}
 	},
