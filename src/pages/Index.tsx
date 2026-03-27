@@ -5,11 +5,13 @@ const WEDDING_IMG = "https://cdn.poehali.dev/projects/f86ef855-9614-47c9-aa55-6d
 const BUSINESS_IMG = "https://cdn.poehali.dev/projects/f86ef855-9614-47c9-aa55-6d8cad3637ce/files/db8e0820-de04-409b-b7e8-1f3da55d42af.jpg";
 const CLIENT_IMG = "https://cdn.poehali.dev/projects/f86ef855-9614-47c9-aa55-6d8cad3637ce/files/c1bdd140-4405-40fa-9d10-3ed5dabbbe41.jpg";
 
+const HERO_IMG = "https://cdn.poehali.dev/projects/f86ef855-9614-47c9-aa55-6d8cad3637ce/files/184c86ca-b5d0-4e19-9b7a-065e66662724.jpg";
+
 const NAV_ITEMS = [
-  { id: "about", label: "Обо мне" },
   { id: "portfolio", label: "Портфолио" },
-  { id: "pricing", label: "Пакеты" },
+  { id: "pricing", label: "Услуги" },
   { id: "reviews", label: "Отзывы" },
+  { id: "about", label: "Процесс" },
   { id: "contact", label: "Контакты" },
 ];
 
@@ -173,7 +175,7 @@ export default function Index() {
         .pkg { border: 1px solid var(--border-c); padding: 40px 32px; transition: border-color 0.3s; }
         .pkg:hover { border-color: var(--gold); }
         .pkg.featured { border-color: var(--gold); background: rgba(201,169,110,0.04); }
-        .nav-link { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); transition: color 0.25s; cursor: pointer; background: none; border: none; }
+        .nav-link { font-size: 15px; letter-spacing: 0.02em; color: rgba(232,228,220,0.7); transition: color 0.25s; cursor: pointer; background: none; border: none; font-weight: 300; }
         .nav-link:hover, .nav-link.active { color: #E8E4DC; }
         .gold-line { width: 40px; height: 1px; background: var(--gold); }
         .review-card { border: 1px solid var(--border-c); padding: 32px; transition: border-color 0.3s; }
@@ -190,13 +192,11 @@ export default function Index() {
       `}</style>
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-16 py-6" style={{ background: "linear-gradient(to bottom, rgba(10,10,10,0.95), transparent)" }}>
-        <div className="font-cormorant text-xl font-light tracking-widest text-[#E8E4DC]">
-          КАДР
-        </div>
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end px-8 md:px-16 py-6">
         <div className="hidden md:flex items-center gap-10">
           {NAV_ITEMS.map(n => (
-            <button key={n.id} onClick={() => scrollTo(n.id)} className={`nav-link ${activeNav === n.id ? "active" : ""}`}>
+            <button key={n.id} onClick={() => scrollTo(n.id)} className={`nav-link ${activeNav === n.id ? "active" : ""}`}
+              style={{ fontSize: "15px", letterSpacing: "0.02em", textTransform: "none", fontWeight: 300 }}>
               {n.label}
             </button>
           ))}
@@ -218,32 +218,37 @@ export default function Index() {
       )}
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={WEDDING_IMG} alt="" className="w-full h-full object-cover" style={{ filter: "brightness(0.22)" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 60%, #0A0A0A 100%)" }} />
+      <section className="relative min-h-screen overflow-hidden" style={{ background: "#1a1714" }}>
+        {/* Radial vignette bg */}
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 80% at 30% 50%, #2e2820 0%, #0e0c0a 60%, #080705 100%)" }} />
+
+        {/* Person photo — left side */}
+        <div className="absolute bottom-0 left-0 h-full" style={{ width: "55%" }}>
+          <img
+            src={HERO_IMG}
+            alt="Видеограф"
+            className="h-full w-full object-cover object-top"
+            style={{ maskImage: "linear-gradient(to right, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)", WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)" }}
+          />
         </div>
-        <div ref={hero.ref} className={`relative z-10 text-center px-8 anim ${hero.inView ? "show" : ""}`}>
-          <p className="font-ibm text-[10px] tracking-[0.35em] text-[#C9A96E] uppercase mb-8">Видеограф · Москва</p>
-          <h1 className="font-cormorant font-light text-6xl md:text-8xl lg:text-[110px] leading-none tracking-tight text-[#E8E4DC] mb-8">
-            Кадры,<br />
-            <em>которые</em><br />
-            остаются
+
+        {/* Fade bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-40" style={{ background: "linear-gradient(to top, #0A0A0A, transparent)" }} />
+
+        {/* Content — right side */}
+        <div ref={hero.ref} className={`relative z-10 min-h-screen flex flex-col justify-center pl-[40%] pr-8 md:pr-20 anim ${hero.inView ? "show" : ""}`}>
+          <h1 className="font-ibm font-bold text-[clamp(52px,8vw,110px)] leading-none tracking-tight text-[#E8E4DC] mb-6" style={{ letterSpacing: "-0.01em" }}>
+            ВИДЕОГРАФ
           </h1>
-          <p className="font-ibm font-light text-sm tracking-widest text-[#5A5650] uppercase max-w-sm mx-auto mb-14">
-            Кинематографичная видеосъёмка свадеб,<br />мероприятий и бизнес-проектов
+          <p className="font-cormorant text-[clamp(22px,3vw,36px)] font-light text-[#E8E4DC] mb-2" style={{ letterSpacing: "0.01em" }}>
+            Зигануров Артём
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <button onClick={() => scrollTo("portfolio")} className="submit-btn">
-              Смотреть портфолио
-            </button>
-            <button onClick={() => scrollTo("contact")} className="font-ibm text-[11px] tracking-[0.2em] uppercase text-[#5A5650] hover:text-[#E8E4DC] transition-colors bg-transparent border-none border-b border-[#5A5650] pb-0.5 cursor-pointer">
-              Связаться
-            </button>
-          </div>
-        </div>
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce">
-          <Icon name="ChevronDown" size={16} className="text-[#5A5650]" />
+          <p className="font-ibm text-[15px] font-light text-[#9A9488] mb-10">
+            Татарин с камерой
+          </p>
+          <p className="font-cormorant text-[clamp(18px,2.2vw,26px)] font-light text-[#C8C2B8] leading-snug max-w-md">
+            Снимаю свадьбы, бренды и истории,<br />которые хочется пересматривать
+          </p>
         </div>
       </section>
 
